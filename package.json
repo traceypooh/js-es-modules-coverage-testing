@@ -2,7 +2,7 @@
   "esm": {
     "cache": false
   },
-  "dependencies": {
+  "devDependencies": {
     "esm": "",
     "jasmine": "",
     "nyc": ""
