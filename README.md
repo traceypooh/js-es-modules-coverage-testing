@@ -1,4 +1,10 @@
-# JS coverage and testing for ES6 code using ES Modules, leveraging simply: jasmine, nyc and esm
+# JS coverage and testing for ES6 code using ES Modules
+## Uses simply: jasmine, nyc and esm
+Goal is to avoid babel, transpiling, and any dynamic transform of the JS source/test code as possible.
+- `jasmine` over `jest` package (since Jasmine can use `esm` package to make `import`/`export` work nicely).
+- `nyc` for code coverage.
+There's a few _subtle_ things to get setup and "just right" to make it all work seamlessly.
+But once you know them, you're good to go.
 
 ## run
 ```bash
@@ -8,6 +14,7 @@ cd js-es-modules-coverage-testing
 npm install
 npm test
 ```
+(or alternatively: `npx nyc jasmine`)
 
 ## yields
 ```text
