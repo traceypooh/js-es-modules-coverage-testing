@@ -1,0 +1,10 @@
+{
+  "esm": {
+    "cache": false
+  },
+  "dependencies": {
+    "esm": "",
+    "jasmine": "",
+    "nyc": ""
+  }
+}
