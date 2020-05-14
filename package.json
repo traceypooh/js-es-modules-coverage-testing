@@ -6,5 +6,8 @@
     "esm": "",
     "jasmine": "",
     "nyc": ""
+  },
+  "scripts": {
+    "test": "nyc jasmine"
   }
 }
