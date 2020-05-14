@@ -1,7 +1,6 @@
-# js-es-modules-coverage-testing
-JS coverage and testing for ES6 code using ES Modules, leveraging simply: jasmine, nyc and esm
+# JS coverage and testing for ES6 code using ES Modules, leveraging simply: jasmine, nyc and esm
 
-# run
+## run
 ```bash
 
 git clone https://github.com/traceypooh/js-es-modules-coverage-testing
@@ -10,7 +9,7 @@ npm install
 npm test
 ```
 
-# yields
+## yields
 ```text
 > npm test
 
