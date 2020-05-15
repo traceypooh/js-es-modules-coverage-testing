@@ -43,3 +43,25 @@ All files     |     100 |      100 |     100 |     100 |
   foo.js      |     100 |      100 |     100 |     100 |                   
 --------------|---------|----------|---------|---------|-------------------
 ```
+
+## the magic
+- name test files like `spec/*.spec.js`
+  - I had `test/*.test.js` previously - but the most seamless way to get everything working _and_ to show the coverage of the `*.spec.js` tests _themselves_ is to name your tests this way.
+- in `package.json`, you'll need:
+```json
+  "esm": {
+    "cache": false
+  },
+```
+- `spec/support/jasmine.json` needs to auto-include `esm` for `import`-ing
+```json
+{
+  "spec_dir": "spec",
+  "helpers": [
+    "../node_modules/esm"
+  ],
+  "spec_files": [
+    "**/*.spec.js"
+  ]
+}
+```
