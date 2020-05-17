@@ -1,13 +1,15 @@
 {
-  "esm": {
-    "cache": false
-  },
+  "type": "module",
   "devDependencies": {
-    "esm": "",
-    "jasmine": "",
-    "nyc": ""
+    "c8": "",
+    "expectations": "",
+    "mocha": "",
+    "sinon": ""
   },
   "scripts": {
-    "test": "nyc jasmine"
+    "test": "c8 mocha"
+  },
+  "mocha": {
+    "require": "expectations"
   }
 }
