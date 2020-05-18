@@ -1,10 +1,16 @@
 # JS coverage and testing for ES6 code using ES Modules
 ## Uses simply: jasmine, nyc and esm
 Goal is to avoid babel, transpiling, and any dynamic transform of the JS source/test code as possible.
-- `jasmine` over `jest` package (since Jasmine can use `esm` package to make `import`/`export` work nicely).
-- `nyc` for code coverage.
+- `mocha` since it can understand ES Modules (and make `import`/`export` work nicely).
+- `c8` for code coverage (since it understands ES Modules)
+- `expectations` for `jest`/`jasmine` like testing, eg: `expect('hai'.length).toBe(3)`
+- `sinon` for mocking, stubs, and spies (more below on that)
 There's a few _subtle_ things to get setup and "just right" to make it all work seamlessly.
 But once you know them, you're good to go.
+
+**If you prefer `jasmine`**, see this prior setup
+https://github.com/traceypooh/js-es-modules-coverage-testing/tree/jasmine-esm-nyc
+
 
 ## run
 ```bash
@@ -14,54 +20,55 @@ cd js-es-modules-coverage-testing
 npm install
 npm test
 ```
-(or alternatively: `npx nyc jasmine`)
+(or alternatively: `npx c8 mocha`)
 
 ## yields
 ```text
-> npm test
-
 > @ test /Users/tracey/dev/js-es-modules-coverage-testing
-> nyc jasmine
+> c8 mocha
 
-Randomized with seed 31274
-Started
-...
+  bar()
+    ✓ should return number minus one
 
+  foo()
+    ✓ should return number plus one
 
-3 specs, 0 failures
-Finished in 0.009 seconds
-Randomized with seed 31274 (jasmine --random=true --seed=31274)
---------------|---------|----------|---------|---------|-------------------
-File          | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
---------------|---------|----------|---------|---------|-------------------
-All files     |     100 |      100 |     100 |     100 |                   
- spec         |     100 |      100 |     100 |     100 |                   
-  bar.spec.js |     100 |      100 |     100 |     100 |                   
-  foo.spec.js |     100 |      100 |     100 |     100 |                   
- src          |     100 |      100 |     100 |     100 |                   
-  bar.js      |     100 |      100 |     100 |     100 |                   
-  foo.js      |     100 |      100 |     100 |     100 |                   
---------------|---------|----------|---------|---------|-------------------
+  foobar()
+    ✓ should return same number
+
+  goo()
+    ✓ should switch from 2 to 3 via a swap out
+    ✓ should switch from 2 to 3 via a mock
+
+  5 passing (11ms)
+
+----------|---------|----------|---------|---------|-------------------
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+----------|---------|----------|---------|---------|-------------------
+All files |     100 |      100 |     100 |     100 |
+ bar.js   |     100 |      100 |     100 |     100 |
+ foo.js   |     100 |      100 |     100 |     100 |
+ goo.js   |     100 |      100 |     100 |     100 |
+----------|---------|----------|---------|---------|-------------------
 ```
 
 ## the magic
-- name test files like `spec/*.spec.js`
-  - I had `test/*.test.js` previously - but the most seamless way to get everything working _and_ to show the coverage of the `*.spec.js` tests _themselves_ is to name your tests this way.
-- in `package.json`, you'll need:
+- in `package.json`, this tells `node` and scripts all `.js` files are ES Modules
 ```json
-  "esm": {
-    "cache": false
-  },
+  "type": "module",
 ```
-- `spec/support/jasmine.json` needs to auto-include `esm` for `import`-ing
+- in `package.json`, this tells `mocha` to preload `expectations` (for `jest`-like testing)
 ```json
-{
-  "spec_dir": "spec",
-  "helpers": [
-    "../node_modules/esm"
-  ],
-  "spec_files": [
-    "**/*.spec.js"
-  ]
-}
+  "mocha": {
+    "require": "expectations"
+  }
 ```
+
+
+## mocking, stubs, and spies
+_By Far,_ this is the most complicated thing to get right.  I spent hours and hours over a few days on/off trying to get mocking to work (first with `jasmine`, then `sinon`).
+
+Fortunately, I found this lil' gem:
+- https://stackoverflow.com/a/46739544
+
+Normally, ES Modules are _very locked down_ and hard to mock.  By grouping all the export-ed methods via `export default Goo`, and importing via `import Goo from '../src/goo.js'`, we can replace methods if needed for testing.  (Imagine needing to test something that live-fetches resources, etc.)
