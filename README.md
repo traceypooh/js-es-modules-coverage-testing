@@ -5,11 +5,13 @@ Goal is to avoid babel, transpiling, and any dynamic transform of the JS source/
 - `c8` for code coverage (since it understands ES Modules)
 - `expectations` for `jest`/`jasmine` like testing, eg: `expect('hai'.length).toBe(3)`
 - `sinon` for mocking, stubs, and spies (more below on that)
+
 There's a few _subtle_ things to get setup and "just right" to make it all work seamlessly.
 But once you know them, you're good to go.
 
-**If you prefer `jasmine`**, see this prior setup
-https://github.com/traceypooh/js-es-modules-coverage-testing/tree/jasmine-esm-nyc
+**If you prefer `jasmine`**
+- see this prior setup
+  - https://github.com/traceypooh/js-es-modules-coverage-testing/tree/jasmine-esm-nyc
 
 
 ## run
@@ -72,3 +74,6 @@ Fortunately, I found this lil' gem:
 - https://stackoverflow.com/a/46739544
 
 Normally, ES Modules are _very locked down_ and hard to mock.  By grouping all the export-ed methods via `export default Goo`, and importing via `import Goo from '../src/goo.js'`, we can replace methods if needed for testing.  (Imagine needing to test something that live-fetches resources, etc.)
+
+- see [src/goo.js](src/goo.js)
+- see [test/goo.test.js](test/goo.test.js)
