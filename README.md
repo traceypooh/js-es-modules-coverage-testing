@@ -1,10 +1,12 @@
 # JS coverage and testing for ES6 code using ES Modules
 ## Uses simply: mocha and c8
 Goal is to avoid babel, transpiling, and any dynamic transform of the JS source/test code as possible.
-- `mocha` since it can understand ES Modules (and make `import`/`export` work nicely).
-- `c8` for code coverage (since it understands ES Modules)
-- `expectations` for `jest`/`jasmine` like testing, eg: `expect('hai'.length).toBe(3)`
-- `sinon` for mocking, stubs, and spies (more below on that)
+- [mocha](https://mochajs.org/) since it can understand ES Modules
+  (and make `import`/`export` work nicely).
+- [c8](https://github.com/bcoe/c8) for code coverage (since it understands ES Modules)
+- [expectations](https://github.com/spmason/expectations) for `jest`/`jasmine` like testing,
+  eg: `expect('hai'.length).toBe(3)`
+- [sinon](https://sinonjs.org/) for mocking, stubs, and spies (more below on that)
 
 There's a few _subtle_ things to get setup and "just right" to make it all work seamlessly.
 But once you know them, you're good to go.
